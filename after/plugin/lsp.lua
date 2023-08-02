@@ -6,6 +6,7 @@ lsp.ensure_installed({
   'rust_analyzer',
   'perlnavigator',
   'gopls',
+  'bashls',
 })
 
 -- Fix Undefined global 'vim'
