@@ -13,6 +13,10 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
+    use {
+        'j-morano/buffer_manager.nvim', requires = { {'nvim-lua/plenary.nvim'} }
+    }
+
     use({
         'rose-pine/neovim',
         as = 'rose-pine',
@@ -61,6 +65,7 @@ return require('packer').startup(function(use)
         use("theprimeagen/refactoring.nvim")
         use("mbbill/undotree")
         use("tpope/vim-fugitive")
+        use("tpope/vim-surround")
         use("nvim-treesitter/nvim-treesitter-context");
 
         use {

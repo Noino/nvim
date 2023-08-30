@@ -12,7 +12,7 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- cuz cba making : on a finnish keyboard
-vim.keymap.set("n", "<enter>", ":")
+-- vim.keymap.set("n", "<enter>", ":")
 
 -- worst places?
 vim.keymap.set("n", "q", "<nop>")
