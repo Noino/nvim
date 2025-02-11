@@ -1,4 +1,12 @@
 return {
+
+
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        opts = {},
+    },
+
     "neovim/nvim-lspconfig",
     dependencies = {
         "williamboman/mason.nvim",
@@ -29,6 +37,7 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
+                "phpactor", -- php
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -52,6 +61,7 @@ return {
                         }
                     }
                 end,
+
             }
         })
 
