@@ -14,9 +14,13 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- cuz cba making : on a finnish keyboard
 vim.keymap.set("n", "<enter>", ":")
 
+
 -- worst places?
 vim.keymap.set("n", "q", "<nop>")
 vim.keymap.set("n", "Q", "<nop>")
+vim.keymap.set("n", "<leader>r", ":normal! qm<CR>")
+vim.keymap.set("n", "<leader>R", "@m")
+
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
