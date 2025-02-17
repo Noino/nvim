@@ -23,7 +23,7 @@ vim.keymap.set("n", "<leader>R", "@m")
 
 
 -- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "p", '"0p', { noremap = true, silent = true })
 
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
