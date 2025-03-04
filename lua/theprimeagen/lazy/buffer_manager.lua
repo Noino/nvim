@@ -39,6 +39,12 @@ return {
             load_buf_according_to_dir()
         end, {})
 
+        vim.api.nvim_create_autocmd({ "QuitPre", "VimLeave" }, {
+            pattern = '*',
+            callback = function()
+                save_buf_according_to_dir();
+            end
+        })
 --        vim.keymap.set("n", "<leader>bs", save_buf_according_to_dir)
 --        vim.keymap.set("n", "<leader>bl", load_buf_according_to_dir )
 
