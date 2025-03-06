@@ -35,3 +35,4 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

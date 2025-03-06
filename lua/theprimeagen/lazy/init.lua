@@ -7,6 +7,7 @@ return {
     },
 
     "eandrju/cellular-automaton.nvim",
+    "tpope/vim-surround",
 
 }
 

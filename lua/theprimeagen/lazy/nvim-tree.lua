@@ -1,12 +1,12 @@
 return {
     {
         "nvim-tree/nvim-tree.lua",
-        dependencies= {"nvim-tree/nvim-web-devicons"},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
         config = function()
-
             vim.keymap.set('n', '<C-f>', vim.cmd.NvimTreeToggle)
-            vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = function() require("nvim-tree.api").tree.close() end })
+            vim.api.nvim_create_autocmd({ "VimEnter" },
+                { callback = function() require("nvim-tree.api").tree.close() end })
 
             require("nvim-tree").setup({
                 view = {
@@ -22,6 +22,9 @@ return {
                     open_file = {
                         quit_on_open = true,
                     },
+                    change_dir = {
+                        global = true
+                    },
                 },
                 update_focused_file = {
                     enable = true,
@@ -32,7 +35,6 @@ return {
                     exclude = false,
                 },
             })
-
         end
     }
 }
