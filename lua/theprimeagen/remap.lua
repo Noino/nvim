@@ -14,7 +14,7 @@ vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 -- cuz cba making : on a finnish keyboard
 vim.keymap.set("n", "<enter>", ":")
 
-
+vim.keymap.set({ "n", "i" }, "<F1>", "<nop>")
 -- worst places?
 vim.keymap.set("n", "q", "<nop>")
 vim.keymap.set("n", "Q", "<nop>")

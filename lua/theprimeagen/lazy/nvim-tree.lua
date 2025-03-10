@@ -23,8 +23,13 @@ return {
                         quit_on_open = true,
                     },
                     change_dir = {
-                        global = true
+                        enable = false,
+                        global = false,
                     },
+                },
+                hijack_directories = {
+                    enable = false,
+                    auto_open = true,
                 },
                 update_focused_file = {
                     enable = true,
