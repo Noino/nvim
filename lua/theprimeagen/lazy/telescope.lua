@@ -22,9 +22,22 @@ return {
         })
         telescope.load_extension('tmux')
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-        vim.keymap.set('n', '<leader>ph', function() builtin.find_files({ hidden = true }) end, {})
-        vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
+
+        local seshnode = (function()
+            local sn = ''
+            if not vim.g.started_with_stdin then
+                if vim.fn.argc() == 0 then
+                    sn = vim.fn.getcwd()
+                elseif vim.fn.isdirectory(vim.fn.argv(0)) ~= 0 then
+                    sn = vim.fn.fnamemodify(vim.fn.argv(0), ':p:h')
+                end
+            end
+            return sn
+        end)()
+
+        vim.keymap.set('n', '<leader>pf', function() builtin.find_files({ cwd = seshnode }) end, {})
+        vim.keymap.set('n', '<leader>ph', function() builtin.find_files({ cwd = seshnode, hidden = true }) end, {})
+        vim.keymap.set('n', '<leader>pg', function() builtin.live_grep({ cwd = seshnode }) end, {})
         vim.keymap.set('n', '<leader>ps', function()
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end)

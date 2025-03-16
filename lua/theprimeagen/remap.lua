@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+-- move shit
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -18,6 +19,8 @@ vim.keymap.set({ "n", "i" }, "<F1>", "<nop>")
 -- worst places?
 vim.keymap.set("n", "q", "<nop>")
 vim.keymap.set("n", "Q", "<nop>")
+
+
 vim.keymap.set("n", "<leader>r", ":normal! qm<CR>")
 vim.keymap.set("n", "<leader>R", "@m")
 
