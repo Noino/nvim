@@ -15,6 +15,9 @@ return {
         "j-hui/fidget.nvim",
     },
 
+    cond = function()
+        return not vim.g.utility_mode
+    end,
     config = function()
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")

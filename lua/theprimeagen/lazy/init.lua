@@ -6,8 +6,5 @@ return {
         name = "plenary"
     },
 
-    "eandrju/cellular-automaton.nvim",
-    "tpope/vim-surround",
 
 }
-

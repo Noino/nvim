@@ -24,16 +24,17 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>r", ":normal! qm<CR>")
 vim.keymap.set("n", "<leader>R", "@m")
 
-
 -- greatest remap ever
-vim.keymap.set("x", "p", '"0p', { noremap = true, silent = true })
+vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
+
 
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-vim.keymap.set({ "n", "v" }, "<del>", [["_x]])
+--
+--vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+--vim.keymap.set({ "n", "v" }, "<del>", [["_x]])
 
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")

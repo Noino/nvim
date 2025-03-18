@@ -1,6 +1,9 @@
 return {
     "laytan/cloak.nvim",
-    config = function() 
+    cond = function()
+        return not vim.g.utility_mode
+    end,
+    config = function()
         require("cloak").setup({
             enabled = true,
             cloak_character = "*",

@@ -1,5 +1,8 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    cond = function()
+        return not vim.g.utility_mode
+    end,
     build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({

@@ -1,5 +1,8 @@
 return {
     "stevearc/conform.nvim",
+    cond = function()
+        return not vim.g.utility_mode
+    end,
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = {

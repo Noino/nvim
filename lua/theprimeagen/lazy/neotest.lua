@@ -8,6 +8,9 @@ return {
         "fredrikaverpil/neotest-golang",
         "leoluz/nvim-dap-go",
     },
+    cond = function()
+        return not vim.g.utility_mode
+    end,
     config = function()
         require("neotest").setup({
             adapters = {
@@ -42,6 +45,5 @@ return {
         vim.keymap.set("n", "<leader>to", function()
             require("neotest").output.open()
         end, { desc = "Debug: Open test output" })
-
     end
 }

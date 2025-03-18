@@ -1,6 +1,9 @@
 return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
+    cond = function()
+        return not vim.g.utility_mode
+    end,
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         local harpoon = require("harpoon")
@@ -38,9 +41,5 @@ return {
         -- Toggle previous & next buffers stored within Harpoon list
         vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
         vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
-
     end
 }
-
-
-

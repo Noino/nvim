@@ -2,6 +2,9 @@ return {
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
+        cond = function()
+            return not vim.g.utility_mode
+        end,
         config = function()
             require("trouble").setup()
 
