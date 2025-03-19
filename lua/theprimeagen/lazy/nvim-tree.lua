@@ -9,6 +9,7 @@ return {
         config = function()
             vim.keymap.set('n', '<C-f>', vim.cmd.NvimTreeToggle)
             require("nvim-tree").setup({
+                disable_netrw = true,
                 view = {
                     width = 30,
                 },
@@ -41,6 +42,10 @@ return {
                 },
             })
 
+            vim.api.nvim_create_autocmd({ "User" }, {
+                pattern = "sessioneer.LoadPost",
+                callback = function() require("nvim-tree.api").tree.close() end
+            })
             vim.api.nvim_create_autocmd({ "VimEnter" }, {
                 callback = function() require("nvim-tree.api").tree.close() end
             })
