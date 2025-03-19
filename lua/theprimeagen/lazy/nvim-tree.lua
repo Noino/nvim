@@ -42,11 +42,8 @@ return {
                 },
             })
 
-            vim.api.nvim_create_autocmd({ "User" }, {
+            vim.api.nvim_create_autocmd({ "VimEnter", "User" }, {
                 pattern = "sessioneer.LoadPost",
-                callback = function() require("nvim-tree.api").tree.close() end
-            })
-            vim.api.nvim_create_autocmd({ "VimEnter" }, {
                 callback = function() require("nvim-tree.api").tree.close() end
             })
         end
