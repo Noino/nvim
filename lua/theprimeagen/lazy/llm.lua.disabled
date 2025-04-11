@@ -1,0 +1,64 @@
+return {
+    "huggingface/llm.nvim",
+    cond = function()
+        local function is_running(cmd)
+            local f = io.popen(cmd)
+            if not f then return false end
+            local output = f:read("*a")
+            f:close()
+            return output and output:match("%S") ~= nil
+        end
+
+        return not vim.g.utility_mode and is_running("docker ps --filter 'name=ollama' --format '{{.Names}}'")
+    end,
+
+    enabled = true,
+    event = "VeryLazy",
+    opts = {
+        backend = "ollama",
+        url = "http://10.133.7.2:11434",
+        accept_keymap = "<S-Tab>",
+        dismiss_keymap = nil,
+        tls_skip_verify_insecure = true,
+        request_body = {
+            options = {
+                temperature = 0.2,
+                top_p = 0.95,
+            }
+        },
+        lsp = {
+            bin_path = vim.api.nvim_call_function("stdpath", { "data" }) .. "/mason/bin/llm-ls",
+            cmd_env = { LLM_LOG_LEVEL = 'DEBUG' },
+        },
+        --
+        model = "deepseek-coder:6.7b-base",
+        fim = {
+            enabled = true,
+            prefix = '< | fim_begin | >',
+            suffix = '< | fim_hole | >',
+            middle = '< | fim_end | >',
+        },
+
+        --
+        --model = "starcoder2:3b",
+        --tokens_to_clear = { "<|endoftext|>" },
+        --fim = {
+        --    enabled = true,
+        --    prefix = "<fim_prefix>",
+        --    middle = "<fim_middle>",
+        --    suffix = "<fim_suffix>",
+        --},
+
+
+        -- codellama
+        --tokens_to_clear = { "<EOT>" },
+        --fim = {
+        --    enabled = true,
+        --    prefix = "<PRE> ",
+        --    middle = " <MID>",
+        --    suffix = " <SUF>",
+        --},
+        --model = "codellama:code",
+        --context_window = 4096,
+    },
+}

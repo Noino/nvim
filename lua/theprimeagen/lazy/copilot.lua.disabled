@@ -1,0 +1,41 @@
+return {
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        cond = function()
+            local function is_running(cmd)
+                local f = io.popen(cmd)
+                if not f then return false end
+                local output = f:read("*a")
+                f:close()
+                return output and output:match("%S") ~= nil
+            end
+            -- Check if the ollama-copilot process is running
+            local copilot_process = is_running("pgrep -f 'ollama-copilot'")
+            -- Check if the Docker container named 'ollama' is running
+            local docker_container = is_running("docker ps --filter 'name=ollama' --format '{{.Names}}'")
+
+            return copilot_process and docker_container
+        end,
+        config = function()
+            require("copilot").setup({
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = true,
+                    panel = { enabled = false },
+                    hide_during_completion = false,
+                    debounce = 25,
+                    keymap = {
+                        accept = false,
+                        accept_word = false,
+                        accept_line = "<S-Tab>",
+                        next = false,
+                        prev = false,
+                        dismiss = false,
+                    },
+                }
+            })
+        end,
+    },
+}
