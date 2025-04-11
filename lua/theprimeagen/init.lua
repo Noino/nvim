@@ -49,17 +49,23 @@ autocmd({ "BufWritePre" }, {
 autocmd('LspAttach', {
     group = ThePrimeagenGroup,
     callback = function(e)
-        local opts = { buffer = e.buf }
-        vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-        vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-        vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-        vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+        local map = function(keys, func, desc, mode)
+            mode = mode or "n"
+            vim.keymap.set(mode, keys, func, { buffer = e.buf, desc = 'LSP: ' .. desc })
+        end
+        map('gd', require 'telescope.builtin'.lsp_definitions, '[g]oto [d]efinitions')
+        map('gr', require 'telescope.builtin'.lsp_references, '[g]oto [r]eferences')
+        map('gI', require 'telescope.builtin'.lsp_implementations, '[g]oto [I]mplementations')
+        map('<leader>D', require 'telescope.builtin'.lsp_type_definitions, 'Type [ D]efinitions')
+        map('<leader>ds', require 'telescope.builtin'.lsp_document_symbols, '[ d]ocument [s]ymbols')
+        map('<leader>ws', require 'telescope.builtin'.lsp_dynamic_workspace_symbols, '[ w]orkspace [s]ymbols')
+        map('<leader>rn', vim.lsp.buf.rename, '[ r]e[n]ame')
+        map('<leader>ca', vim.lsp.buf.code_action, '[ c]ode [a]ction')
+        map('<leader>K', vim.lsp.buf.hover, '[K]atso Hover Documentation')
+        map('<C-h>', vim.lsp.buf.signature_help, 'C-[h]elp function signature', { 'n', 'i' })
+        map('<leader>vd', vim.diagnostic.open_float, '[v]iew [d]iagnostic')
+        map(']d', vim.diagnostic.goto_prev, 'Previous <]d>iagnostic')
+        map('[d', vim.diagnostic.goto_next, 'Next <[d>iagnostic')
     end
 })
 

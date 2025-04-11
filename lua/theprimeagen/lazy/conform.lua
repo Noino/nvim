@@ -28,7 +28,7 @@ return {
             lua = { "stylua" },
             python = { "isort", "black" },
             javascript = { "prettierd", "prettier", stop_after_first = true },
-            php = { "pint" },
+            php = { "pint", "pretty-php" },
             --            ["_"] = { "trim_whitespace" },
         },
         -- Set default options

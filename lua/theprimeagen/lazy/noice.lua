@@ -21,6 +21,12 @@ return {
 
         require("noice").setup({
             lsp = {
+                -- progress = {
+                --     enabled = true,
+                --     format = 'lsp_progress',
+                --     format_done = 'lsp_progress_done',
+                --     view = 'notify',
+                -- },
                 -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
                 override = {
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -46,22 +52,23 @@ return {
                     },
                     opts = { skip = true },
                 },
-                {
-                    filter = {
-                        event = "msg_show",
-                        blocking = true,
-                    },
-                    view = "vsplit",
-                },
-                {
-                    filter = {
-                        event = "notify",
-                        find = "No information available"
-                    },
-                    opts = {
-                        skip = true
-                    },
-                },
+                --{
+                --    filter = {
+                --        event = "msg_show",
+                --        kind = "",
+                --        blocking = true,
+                --    },
+                --    view = "popup",
+                --},
+                --                {
+                --                    filter = {
+                --                        event = "notify",
+                --                        find = "No information available"
+                --                    },
+                --                    opts = {
+                --                        skip = true
+                --                    },
+                --                },
             },
         })
     end

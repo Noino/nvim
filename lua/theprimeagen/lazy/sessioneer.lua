@@ -1,7 +1,7 @@
 return {
-    'Noino/sessioneer.nvim',
-    -- dir = '~/git/sessioneer.nvim',
-    -- dev = true,
+    -- 'Noino/sessioneer.nvim',
+    dir = '~/git/sessioneer.nvim',
+    dev = true,
     lazy = false,
     cond = function()
         return not vim.g.utility_mode

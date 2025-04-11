@@ -22,7 +22,7 @@ vim.keymap.set("n", "Q", "<nop>")
 
 
 vim.keymap.set("n", "<leader>r", ":normal! qm<CR>")
-vim.keymap.set("n", "<leader>R", "@m")
+vim.keymap.set("n", "M", "@m")
 
 -- greatest remap ever
 vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
