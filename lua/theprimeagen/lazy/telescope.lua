@@ -17,7 +17,7 @@ return {
                     sn = vim.fn.fnamemodify(vim.fn.argv(0), ':p:h')
                 end
             end
-            return sn
+            return vim.fn.resolve(sn)
         end)()
 
         local telescope = require('telescope')
@@ -35,12 +35,13 @@ return {
         })
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', function() builtin.find_files({ cwd = seshnode }) end, {})
-        vim.keymap.set('n', '<leader>ph', function() builtin.find_files({ cwd = seshnode, hidden = true }) end, {})
-        vim.keymap.set('n', '<leader>pg', function() builtin.live_grep({ cwd = seshnode }) end, {})
+        vim.keymap.set('n', '<leader>pf', function() builtin.find_files({ cwd = seshnode, follow = true }) end, {})
+        vim.keymap.set('n', '<leader>ph',
+            function() builtin.find_files({ cwd = seshnode, follow = true, hidden = true }) end, {})
+        vim.keymap.set('n', '<leader>pg', function() builtin.live_grep({ cwd = seshnode, follow = true }) end, {})
         vim.keymap.set('n', '<leader>pb', function() builtin.builtin({ cwd = seshnode }) end, {})
         vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
+            builtin.grep_string({ search = vim.fn.input("Grep > "), follow = true })
         end)
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
         vim.keymap.set('n', '<leader>b', builtin.buffers, {})
