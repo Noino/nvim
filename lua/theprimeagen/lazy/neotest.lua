@@ -6,6 +6,7 @@ return {
         "antoinemadec/FixCursorHold.nvim",
         "nvim-treesitter/nvim-treesitter",
         "fredrikaverpil/neotest-golang",
+        "olimorris/neotest-phpunit",
         "leoluz/nvim-dap-go",
     },
     cond = function()
@@ -17,6 +18,7 @@ return {
                 require("neotest-golang")({
                     dap = { justMyCode = false },
                 }),
+                require("neotest-phpunit"),
             },
         })
 
