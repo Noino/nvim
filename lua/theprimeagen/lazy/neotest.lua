@@ -8,6 +8,7 @@ return {
         "fredrikaverpil/neotest-golang",
         "olimorris/neotest-phpunit",
         "leoluz/nvim-dap-go",
+        "nvim-neotest/neotest-jest",
     },
     cond = function()
         return not vim.g.utility_mode
@@ -19,6 +20,14 @@ return {
                     dap = { justMyCode = false },
                 }),
                 require("neotest-phpunit"),
+                require('neotest-jest')({
+                    jestCommand = "npx jest --testPathIgnorePatterns=e2e-tests;",
+                    -- jestConfigFile = "custom.jest.config.ts",
+                    env = { CI = true },
+                    cwd = function(path)
+                        return vim.fn.getcwd()
+                    end,
+                }),
             },
         })
 
