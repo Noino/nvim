@@ -6,6 +6,7 @@ return {
         -- tmux session & window select
         { "Noino/telescope-tmux.nvim", branch = "tweaks" },
         "norcalli/nvim-terminal.lua",
+        "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
         local seshnode = (function()
@@ -32,6 +33,11 @@ return {
                 border = true,
                 cwd = seshnode,
             },
+            extensions = {
+                ['ui-select'] = {
+                    require("telescope.themes").get_dropdown {}
+                },
+            }
         })
 
         local builtin = require('telescope.builtin')
@@ -48,6 +54,7 @@ return {
         vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 
 
+        telescope.load_extension("ui-select")
         telescope.load_extension('tmux')
     end
 }

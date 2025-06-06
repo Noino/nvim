@@ -5,20 +5,19 @@ return {
         cond = function()
             return not vim.g.utility_mode
         end,
+        keys = {
+            { "<leader>dt", "<cmd>Trouble diagnostics toggle<cr>",                                       desc = "Diagnostics (Trouble)", },
+            { "<leader>tt", "<cmd>Trouble<cr>",                                                          desc = "Trouble mode select", },
+            { "<leader>tn", function() require("trouble").next({ skip_groups = true, jump = true }) end, desc = "Next Trouble Item" },
+            { "<leader>tp", function() require("trouble").prev({ skip_groups = true, jump = true }) end, desc = "Previous Trouble Item" },
+        },
         config = function()
-            require("trouble").setup()
-
-            vim.keymap.set("n", "<leader>tt", function()
-                require("trouble").toggle()
-            end)
-
-            vim.keymap.set("n", "<leader>tn", function()
-                require("trouble").next({ skip_groups = true, jump = true });
-            end)
-
-            vim.keymap.set("n", "<leader>tp", function()
-                require("trouble").previous({ skip_groups = true, jump = true });
-            end)
-        end
+            require("trouble").setup({
+                auto_open = false,
+                auto_close = false,
+                auto_preview = true,
+                use_diagnostic_signs = true,
+            })
+        end,
     },
 }
