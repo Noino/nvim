@@ -43,7 +43,7 @@ return {
             vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Debug: Step Over" })
             vim.keymap.set("n", "<F11>", dap.step_into, { desc = "Debug: Step Into" })
             vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Debug: Step Out" })
-            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+            vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
             vim.keymap.set("n", "<leader>B", function()
                 dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
             end, { desc = "Debug: Set Conditional Breakpoint" })
@@ -98,7 +98,7 @@ return {
                 { desc = "Debug: toggle stacks ui" })
             vim.keymap.set("n", "<leader>dw", function() toggle_debug_ui("watches") end,
                 { desc = "Debug: toggle watches ui" })
-            vim.keymap.set("n", "<leader>db", function() toggle_debug_ui("breakpoints") end,
+            vim.keymap.set("n", "<leader>dB", function() toggle_debug_ui("breakpoints") end,
                 { desc = "Debug: toggle breakpoints ui" })
             vim.keymap.set("n", "<leader>dS", function() toggle_debug_ui("scopes") end,
                 { desc = "Debug: toggle scopes ui" })
