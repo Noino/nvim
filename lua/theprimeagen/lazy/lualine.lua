@@ -1,6 +1,9 @@
 return {
     {
         'nvim-lualine/lualine.nvim',
+        cond = function()
+            return not vim.g.utility_mode
+        end,
         dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
         config = function()
             require 'lualine'.setup({

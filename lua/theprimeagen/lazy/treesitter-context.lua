@@ -1,5 +1,8 @@
 return {
     "nvim-treesitter/nvim-treesitter-context",
+    cond = function()
+        return not vim.g.utility_mode
+    end,
     event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {

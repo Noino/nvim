@@ -35,6 +35,9 @@ return {
     {
         "mfussenegger/nvim-dap",
         lazy = false,
+        cond = function()
+            return not vim.g.utility_mode
+        end,
         config = function()
             local dap = require("dap")
             dap.set_log_level("DEBUG")
@@ -53,6 +56,9 @@ return {
 
     {
         "rcarriga/nvim-dap-ui",
+        cond = function()
+            return not vim.g.utility_mode
+        end,
         dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
         config = function()
             local dap = require("dap")
@@ -138,6 +144,9 @@ return {
 
     {
         "jay-babu/mason-nvim-dap.nvim",
+        cond = function()
+            return not vim.g.utility_mode
+        end,
         dependencies = {
             "williamboman/mason.nvim",
             "mfussenegger/nvim-dap",
