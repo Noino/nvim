@@ -3,7 +3,6 @@ return {
     cond = function()
         return not vim.g.utility_mode
     end,
-    build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({
             -- A list of parser names, or "all"
