@@ -6,7 +6,6 @@ return {
             return not vim.g.utility_mode
         end,
         keys = {
-            { "<leader>dt", "<cmd>Trouble diagnostics toggle<cr>",                                       desc = "Diagnostics (Trouble)", },
             { "<leader>tt", "<cmd>Trouble<cr>",                                                          desc = "Trouble mode select", },
             { "<leader>tn", function() require("trouble").next({ skip_groups = true, jump = true }) end, desc = "Next Trouble Item" },
             { "<leader>tp", function() require("trouble").prev({ skip_groups = true, jump = true }) end, desc = "Previous Trouble Item" },

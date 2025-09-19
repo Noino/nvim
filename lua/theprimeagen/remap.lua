@@ -52,3 +52,7 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
+
+vim.api.nvim_create_user_command("Bda", function()
+  vim.cmd("%bd")
+end, { desc = "Delete all buffers" })
