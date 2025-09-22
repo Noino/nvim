@@ -5,7 +5,7 @@ return {
     end,
     event = "VeryLazy",
     opts = {
-        mode = "agentic",
+        mode = "legacy",
         auto_apply = false,
         confirm_actions = true,
         -- disabled_tools = { "bash", "python"},
