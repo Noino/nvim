@@ -5,23 +5,50 @@ return {
     end,
     event = "VeryLazy",
     opts = {
-        mode = "legacy",
-        auto_apply = false,
-        confirm_actions = true,
-        -- disabled_tools = { "bash", "python"},
-        -- instructions_file = "avante.md",
         provider = "copilot",
+        mode = "legacy",
         providers = {
             copilot = {
                 model = "claude-sonnet-4",
-                timeout = 30000, -- Timeout in milliseconds
                 extra_request_body = {
                     temperature = 0.1,
                 },
+                auto_select_model = false,
             },
         },
+        hints = { enabled = true },
         selector = {
-            exclude_auto_select = { "NvimTree" },
+            provider = "telescope",
+        },
+        behavior = {
+            auto_suggestions = false,
+            auto_set_highlight_group = true,
+            auto_set_keymaps = true,
+            auto_apply_diff_after_generation = false,
+            support_paste_from_clipboard = false,
+            minimize_diff = true,
+            enable_token_counting = true,
+            auto_approve_tool_permissions = false,
+            enable_fastapply = false,
+        },
+        selection = {
+            enabled = true,
+            hint_display = "delayed",
+        },
+                highlights = {
+            diff = {
+                current = "DiffText",
+                incoming = "DiffAdd",
+            },
+        },
+        diff = {
+            autojump = true,
+            list_opener = "copen",
+            override_timeoutlen = 500,
+        },
+        suggestion = {
+            debounce = 15000,
+            throttle = 1000,
         },
     },
     config = function(_, opts)
@@ -33,28 +60,10 @@ return {
         --- The below dependencies are optional,
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
         "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
-        "ibhagwan/fzf-lua",              -- for file_selector provider fzf
         "stevearc/dressing.nvim",        -- for input provider dressing
         "folke/snacks.nvim",             -- for input provider snacks
         "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua",        -- for providers='copilot'
-        {
-            -- support for image pasting
-            "HakonHarnes/img-clip.nvim",
-            event = "VeryLazy",
-            opts = {
-                -- recommended settings
-                default = {
-                    embed_image_as_base64 = false,
-                    prompt_for_file_name = false,
-                    drag_and_drop = {
-                        insert_mode = true,
-                    },
-                    -- required for Windows users
-                    use_absolute_path = true,
-                },
-            },
-        },
         {
             -- Make sure to set this up properly if you have lazy=true
             'MeanderingProgrammer/render-markdown.nvim',
