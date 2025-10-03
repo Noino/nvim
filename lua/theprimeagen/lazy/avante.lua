@@ -1,5 +1,6 @@
 return {
     "yetone/avante.nvim",
+    build = "make BUILD_FROM_SOURCE=true",
     cond = function()
         return not vim.g.utility_mode
     end,
