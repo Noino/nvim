@@ -10,7 +10,7 @@ return {
         mode = "legacy",
         providers = {
             copilot = {
-                model = "claude-sonnet-4",
+                model = "gpt-5",
                 extra_request_body = {
                     temperature = 0.1,
                 },
