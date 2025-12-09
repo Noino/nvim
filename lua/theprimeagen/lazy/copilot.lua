@@ -41,6 +41,7 @@ return {
                 cvs = false,
                 ["."] = false,
             },
+            copilot_model = 'gpt-5.1-codex-max',
             copilot_node_command = 'node', -- Node.js version must be > 18.x
             server_opts_overrides = {},
         })

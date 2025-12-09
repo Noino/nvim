@@ -6,15 +6,41 @@ return {
     end,
     event = "VeryLazy",
     opts = {
-        provider = "copilot",
-        mode = "legacy",
+        instructions_file = '.github/copilot-instructions.md',
+        provider = 'copilot/claude-opus-4.5',
+        auto_suggestions_provider = 'copilot/gpt-5.1-codex-max',
+        mode = 'legacy', -- agentic | legacy
+
         providers = {
-            copilot = {
-                model = "gpt-5",
+            ['copilot/gpt-5.1-codex-max'] = {
+                __inherited_from = 'copilot',
+                model = 'gpt-5.1-codex-max',
+                display_name = 'gpt-5.1-codex-max',
                 extra_request_body = {
+                    max_tokens = 65536,
                     temperature = 0.1,
                 },
-                auto_select_model = false,
+                disable_tools = true,
+            },
+            ['copilot/claude-opus-4.5'] = {
+                __inherited_from = 'copilot',
+                model = 'claude-opus-4.5',
+                display_name = 'claude-opus-4.5',
+                extra_request_body = {
+                    max_tokens = 65536,
+                    temperature = 0.1,
+                },
+                disable_tools = true,
+            },
+            ['copilot/gpt-5.1'] = {
+                __inherited_from = 'copilot',
+                model = 'gpt-5.1',
+                display_name = 'gpt-5.1',
+                extra_request_body = {
+                    max_tokens = 65536,
+                    temperature = 0.1,
+                },
+                disable_tools = true,
             },
         },
         hints = { enabled = true },
@@ -35,8 +61,9 @@ return {
         selection = {
             enabled = true,
             hint_display = "delayed",
+            delay = 300,
         },
-                highlights = {
+        highlights = {
             diff = {
                 current = "DiffText",
                 incoming = "DiffAdd",
