@@ -2,6 +2,7 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "VeryLazy",
+
     config = function()
         require("copilot").setup({
             panel = {
@@ -12,25 +13,25 @@ return {
                     jump_next = "]]",
                     accept = "<CR>",
                     refresh = "gr",
-                    open = "<M-CR>"
+                    open = "<M-CR>",
                 },
                 layout = {
-                    position = "bottom", -- | top | left | right
-                    ratio = 0.4
+                    position = "bottom",
+                    ratio = 0.4,
                 },
             },
+
             suggestion = {
                 enabled = true,
                 auto_trigger = true,
                 debounce = 120,
                 keymap = {
                     accept = "<C-J>",
-                    accept_word = false,
-                    accept_line = false,
                     next = "<C-p>",
                     prev = "<C-l>",
                 },
             },
+
             filetypes = {
                 yaml = false,
                 help = false,
@@ -41,10 +42,6 @@ return {
                 cvs = false,
                 ["."] = false,
             },
-            copilot_model = 'gpt-5.1-codex-max',
-            copilot_node_command = 'node', -- Node.js version must be > 18.x
-            server_opts_overrides = {},
         })
     end,
 }
-
