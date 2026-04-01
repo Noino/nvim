@@ -9,7 +9,7 @@ return {
     version = false,
     opts = {
         instructions_file = ".github/copilot-instructions.md",
-        provider = "copilot/gpt-5.2-codex",
+        provider = "copilot/gpt-5.3-codex",
         -- auto_suggestions_provider = "copilot/gpt-5.1-codex-mini",
         mode = "agentic", -- agentic still dont allow me to be in control
         --mode = "legacy",
@@ -43,20 +43,22 @@ return {
                 },
             },
 
-            ["copilot/gpt-5.2-codex"] = {
+
+            ["copilot/gpt-5.3-codex"] = {
                 __inherited_from = "copilot",
-                model = "gpt-5.2-codex",
-                display_name = "codex-5.2",
+                model = "gpt-5.3-codex",
+                display_name = "codex-5.3",
                 extra_request_body = {
                     max_tokens = 65536,
                     temperature = 0.0,
                 },
             },
 
-            ["copilot/gpt-5.3-codex"] = {
+            ["copilot/gpt-5.4"] = {
                 __inherited_from = "copilot",
-                model = "gpt-5.3-codex",
-                display_name = "codex-5.3",
+                model = "gpt-5.4",
+                display_name = "gpt-5.4",
+                use_response_api = true,
                 extra_request_body = {
                     max_tokens = 65536,
                     temperature = 0.0,
@@ -169,8 +171,8 @@ return {
 
                 local providers = {
                     "copilot/gpt-5.1-codex-mini",
-                    "copilot/gpt-5.2-codex",
                     "copilot/gpt-5.3-codex",
+                    "copilot/gpt-5.4",
                     "copilot/claude-opus-4.6",
                 }
 
