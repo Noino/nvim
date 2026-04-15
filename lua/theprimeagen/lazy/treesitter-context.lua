@@ -7,8 +7,8 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {
         enable = true, -- Enable this plugin (Can be toggled later)
-        max_lines = 5, -- Max number of context lines
-        trim_scope = "inner", -- How context is trimmed (outer/inner)
+        max_lines = 0, -- Max number of context lines
+        trim_scope = "outer", -- How context is trimmed (outer/inner)
         min_window_height = 10, -- Min editor height to show context
         mode = "cursor", -- Show context for cursor or top-line
         separator = '—', -- Separator between context and normal text
