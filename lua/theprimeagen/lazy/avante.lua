@@ -5,7 +5,6 @@ return {
         return not vim.g.utility_mode
     end,
     event = "VeryLazy",
-    lazy = false,
     version = false,
     opts = {
         instructions_file = ".github/copilot-instructions.md",
@@ -16,21 +15,15 @@ return {
         disabled_tools = {
             "bash",
             "python",
-            "run_python",
+            "git_commit",
+            "delete_path",
+            "move_path",
 
-        --    "copy_path",
-        --    "create_dir",
-        --    "create_file",
             "delete_dir",
             "delete_file",
-            "delete_path",
-            "git_commit",
-            "move_path",
             "rename_dir",
             "rename_file",
             "replace_file",
-        --    "str_replace",
-        --    "write_to_file",
         },
         providers = {
             ["copilot/gpt-5.1-codex-mini"] = {
@@ -65,18 +58,16 @@ return {
                 },
             },
 
-            ["copilot/claude-opus-4.6"] = {
+            ["copilot/claude-opus-4.7"] = {
                 __inherited_from = "copilot",
-                model = "claude-opus-4.6",
-                display_name = "opus-4.6",
+                model = "claude-opus-4.7",
+                display_name = "opus-4.7",
                 extra_request_body = {
                     max_tokens = 65536,
                     temperature = 0.1, -- allow thinking here
                 },
             },
         },
-
-        hints = { enabled = true },
         selector = {
             provider = "telescope",
         },
@@ -96,6 +87,7 @@ return {
             use_cwd_as_project_root = false,
             auto_focus_on_diff_view = false,
         },
+        confirmation_ui_style = "popup",
         prompt_logger = {
             enabled = true,
             log_dir = vim.fn.stdpath("cache") .. "/avante_prompts",
@@ -109,17 +101,9 @@ return {
                 insert = "<C-p>",
             },
         },
-
-
-        edit = {
-            auto_apply = false,
-            diff_preview = true,
-        },
-
         selection = {
             enabled = true,
             hint_display = "delayed",
-            delay = 300,
         },
 
         highlights = {
@@ -173,7 +157,7 @@ return {
                     "copilot/gpt-5.1-codex-mini",
                     "copilot/gpt-5.3-codex",
                     "copilot/gpt-5.4",
-                    "copilot/claude-opus-4.6",
+                    "copilot/claude-opus-4.7",
                 }
 
                 local current = cfg.provider
