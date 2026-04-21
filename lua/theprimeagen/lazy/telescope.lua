@@ -42,10 +42,13 @@ return {
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>pf', function() builtin.find_files({ cwd = seshnode, follow = true }) end, {})
-        vim.keymap.set('n', '<leader>ph',
+        vim.keymap.set('n', '<leader>pF',
             function() builtin.find_files({ cwd = seshnode, follow = true, hidden = true, no_ignore = true, no_ignore_parent = true }) end,
             {})
         vim.keymap.set('n', '<leader>pg', function() builtin.live_grep({ cwd = seshnode, follow = true }) end, {})
+        vim.keymap.set('n', '<leader>pG',
+            function() builtin.live_grep({ cwd = seshnode, follow = true, hidden = true, no_ignore = true, no_ignore_parent = true }) end,
+            {})
         vim.keymap.set('n', '<leader>pb', function() builtin.builtin({ cwd = seshnode }) end, {})
         vim.keymap.set('n', '<leader>ps', function()
             builtin.grep_string({ search = vim.fn.input("Grep > "), follow = true })

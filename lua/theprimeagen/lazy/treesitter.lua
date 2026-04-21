@@ -13,7 +13,19 @@ return {
                 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
             end,
         })
-        local ensureInstalled = { "vimdoc", "javascript", "lua", "go", "perl", "bash", "php", "hyprlang" }
+        local ensureInstalled = { "vimdoc",
+            "javascript",
+            "typescript",
+            "lua",
+            "go",
+            "perl",
+            "bash",
+            "php",
+            "hyprlang",
+            "json",
+            "gitignore",
+            "markdown"
+        }
         local alreadyInstalled = require('nvim-treesitter.config').get_installed()
         local parsersToInstall = vim.iter(ensureInstalled)
             :filter(function(parser)

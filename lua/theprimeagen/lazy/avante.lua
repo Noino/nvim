@@ -87,7 +87,6 @@ return {
             use_cwd_as_project_root = false,
             auto_focus_on_diff_view = false,
         },
-        confirmation_ui_style = "popup",
         prompt_logger = {
             enabled = true,
             log_dir = vim.fn.stdpath("cache") .. "/avante_prompts",
