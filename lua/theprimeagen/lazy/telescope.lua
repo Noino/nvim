@@ -37,7 +37,13 @@ return {
                 ['ui-select'] = {
                     require("telescope.themes").get_dropdown {}
                 },
-            }
+            },
+            pickers = {
+                buffers = {
+                    -- ignore_current_buffer = true,
+                    sort_lastused = true,
+                },
+            },
         })
 
         local builtin = require('telescope.builtin')
