@@ -15,6 +15,7 @@ return {
         disabled_tools = {
             "bash",
             "python",
+            "run_python",
             "git_commit",
             "delete_path",
             "move_path",
@@ -58,10 +59,10 @@ return {
                 },
             },
 
-            ["copilot/claude-opus-4.7"] = {
+            ["copilot/claude-sonnet-4.6"] = {
                 __inherited_from = "copilot",
-                model = "claude-opus-4.7",
-                display_name = "opus-4.7",
+                model = "claude-sonnet-4.6",
+                display_name = "sonnet-4.6",
                 extra_request_body = {
                     max_tokens = 65536,
                     temperature = 0.1, -- allow thinking here
@@ -156,7 +157,7 @@ return {
                     "copilot/gpt-5.1-codex-mini",
                     "copilot/gpt-5.3-codex",
                     "copilot/gpt-5.4",
-                    "copilot/claude-opus-4.7",
+                    "copilot/claude-sonnet-4.6",
                 }
 
                 local current = cfg.provider
