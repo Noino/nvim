@@ -10,8 +10,8 @@ return {
         instructions_file = ".github/copilot-instructions.md",
         provider = "copilot/gpt-5.3-codex",
         -- auto_suggestions_provider = "copilot/gpt-5.1-codex-mini",
-        mode = "agentic", -- agentic still dont allow me to be in control
-        --mode = "legacy",
+        -- mode = "agentic", -- agentic still dont allow me to be in control
+        mode = "legacy",
         disabled_tools = {
             "bash",
             "python",
