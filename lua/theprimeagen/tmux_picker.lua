@@ -34,8 +34,13 @@ M.sessions = function()
                 local name = state.get_selected_entry().display
                 switch_away_if_current(name)
                 vim.fn.jobstart({ 'bash', '-lc', 'amux rm ' .. vim.fn.shellescape(name) }, {
-                    on_exit = function()
-                        vim.schedule(function() refresh(prompt_bufnr) end)
+                    on_exit = function(_, code)
+                        vim.schedule(function()
+                            if code ~= 0 then
+                                vim.notify('amux rm failed — session may have uncommitted changes (exit ' .. code .. ')', vim.log.levels.WARN)
+                            end
+                            refresh(prompt_bufnr)
+                        end)
                     end,
                 })
             end)
