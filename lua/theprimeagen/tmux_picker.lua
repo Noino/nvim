@@ -19,15 +19,29 @@ M.sessions = function()
         )
     end
 
+    local sessions_list = vim.fn.systemlist('tmux list-sessions -F "#S" 2>/dev/null')
+    local current_session = vim.trim(vim.fn.system('tmux display-message -p "#S"'))
+
     local function switch_away_if_current(name)
-        local current = vim.trim(vim.fn.system('tmux display-message -p "#S"'))
-        if current == name then
-            vim.fn.system('tmux switch-client -n 2>/dev/null || tmux switch-client -p 2>/dev/null')
+        if current_session ~= name then return end
+        -- explicit target: relative -n/-p is unreliable from inside a display-popup
+        for _, s in ipairs(sessions_list) do
+            if s ~= name then
+                vim.fn.system('tmux switch-client -t ' .. vim.fn.shellescape(s))
+                return
+            end
         end
+    end
+
+    -- default-select the currently-attached session
+    local default_index
+    for i, s in ipairs(sessions_list) do
+        if s == current_session then default_index = i break end
     end
 
     require('telescope').extensions.tmux.sessions({
         quit_on_select = true,
+        default_selection_index = default_index,
         attach_mappings = function(prompt_bufnr, map)
             -- M-d: smart teardown, keep picker open, refresh when done
             map({ 'i', 'n' }, '<M-d>', function()
