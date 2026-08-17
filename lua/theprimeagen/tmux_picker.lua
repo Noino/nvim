@@ -59,7 +59,29 @@ M.sessions = function()
                 })
             end)
 
-            -- M-x: vanilla kill, keep picker open
+            -- M-D (shift): forced teardown. This is the escape hatch for the case that
+            -- used to strand worktrees: M-d refuses on a dirty/unpushed tree, you reach
+            -- for M-x (raw kill, no cleanup), and once the session is gone the worktrees
+            -- can no longer be torn down by name. M-D cleans up properly instead.
+            map({ 'i', 'n' }, '<M-D>', function()
+                local name = state.get_selected_entry().display
+                local ok = string.lower(vim.fn.input("FORCE delete '" .. name .. "'? uncommitted/unpushed work is lost. [y/N] "))
+                if ok ~= 'y' then return end
+                switch_away_if_current(name)
+                vim.fn.jobstart({ 'bash', '-lc', 'amux rm ' .. vim.fn.shellescape(name) .. ' --force' }, {
+                    on_exit = function(_, code)
+                        vim.schedule(function()
+                            if code ~= 0 then
+                                vim.notify('amux rm --force failed (exit ' .. code .. ') — run it in a shell to see why', vim.log.levels.ERROR)
+                            end
+                            refresh(prompt_bufnr)
+                        end)
+                    end,
+                })
+            end)
+
+            -- M-x: vanilla kill, keep picker open.
+            -- Leaves worktrees behind by design — prefer M-d / M-D for dev sessions.
             map({ 'i', 'n' }, '<M-x>', function()
                 local e = state.get_selected_entry()
                 local ok = string.lower(vim.fn.input("kill '" .. e.display .. "'? [Y/n] "))
