@@ -1,5 +1,16 @@
 local M = {}
 
+-- Every destructive action logs before acting. Sessions have been vanishing with their
+-- worktrees and amux state left intact -- the signature of a raw kill-session rather than
+-- amux rm -- and post-hoc evidence could not identify the caller. With this, a session
+-- that dies WITHOUT a matching line here was killed by something outside this picker.
+local EVENT_LOG = vim.fn.expand('~/.local/state/amux/session-events.log')
+local function log_action(action, name)
+    local line = string.format('%s picker:%s session=%s\n', os.date('%Y-%m-%dT%H:%M:%S'), action, name)
+    local fh = io.open(EVENT_LOG, 'a')
+    if fh then fh:write(line); fh:close() end
+end
+
 M.sessions = function()
     local actions = require('telescope.actions')
     local state = require('telescope.actions.state')
@@ -27,7 +38,9 @@ M.sessions = function()
         -- explicit target: relative -n/-p is unreliable from inside a display-popup
         for _, s in ipairs(sessions_list) do
             if s ~= name then
-                vim.fn.system('tmux switch-client -t ' .. vim.fn.shellescape(s))
+                -- trailing colon: tmux reads '.' in a target as window.pane, so a dotted session
+                -- name (release branches like v5.24) is otherwise unreachable
+                vim.fn.system('tmux switch-client -t ' .. vim.fn.shellescape(s .. ':'))
                 return
             end
         end
@@ -46,6 +59,7 @@ M.sessions = function()
             -- M-d: smart teardown, keep picker open, refresh when done
             map({ 'i', 'n' }, '<M-d>', function()
                 local name = state.get_selected_entry().display
+                log_action('M-d amux-rm', name)
                 switch_away_if_current(name)
                 vim.fn.jobstart({ 'bash', '-lc', 'amux rm ' .. vim.fn.shellescape(name) }, {
                     on_exit = function(_, code)
@@ -67,6 +81,7 @@ M.sessions = function()
                 local name = state.get_selected_entry().display
                 local ok = string.lower(vim.fn.input("FORCE delete '" .. name .. "'? uncommitted/unpushed work is lost. [y/N] "))
                 if ok ~= 'y' then return end
+                log_action('M-D amux-rm-force', name)
                 switch_away_if_current(name)
                 vim.fn.jobstart({ 'bash', '-lc', 'amux rm ' .. vim.fn.shellescape(name) .. ' --force' }, {
                     on_exit = function(_, code)
@@ -84,10 +99,14 @@ M.sessions = function()
             -- Leaves worktrees behind by design — prefer M-d / M-D for dev sessions.
             map({ 'i', 'n' }, '<M-x>', function()
                 local e = state.get_selected_entry()
-                local ok = string.lower(vim.fn.input("kill '" .. e.display .. "'? [Y/n] "))
-                if ok ~= 'y' and ok ~= '' then return end
+                -- explicit 'y' only. This used to accept a bare Enter, which made an
+                -- accidental keystroke enough to destroy a session and orphan its
+                -- worktrees -- the leading candidate for the disappearances.
+                local ok = string.lower(vim.fn.input("RAW kill '" .. e.display .. "'? worktrees are NOT cleaned up. [y/N] "))
+                if ok ~= 'y' then return end
+                log_action('M-x raw-kill-session', e.display)
                 switch_away_if_current(e.display)
-                vim.fn.system('tmux kill-session -t ' .. vim.fn.shellescape(e.value))
+                vim.fn.system('tmux kill-session -t ' .. vim.fn.shellescape(e.value .. ':'))
                 refresh(prompt_bufnr)
             end)
 
