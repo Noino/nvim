@@ -32,6 +32,9 @@ M.sessions = function()
 
     local sessions_list = vim.fn.systemlist('tmux list-sessions -F "#S" 2>/dev/null')
     local current_session = vim.trim(vim.fn.system('tmux display-message -p "#S"'))
+    -- captured the same way telescope-tmux does, so the switch lands on the outer client
+    -- rather than this popup
+    local current_client = vim.trim(vim.fn.system('tmux display-message -p "#{client_tty}"'))
 
     local function switch_away_if_current(name)
         if current_session ~= name then return end
@@ -56,6 +59,19 @@ M.sessions = function()
         quit_on_select = true,
         default_selection_index = default_index,
         attach_mappings = function(prompt_bufnr, map)
+            -- Enter: telescope-tmux's own select_default switches with a BARE session name
+            -- (`switchc -t "v5.24"`), which tmux parses as window.pane -- so any session
+            -- whose branch carries a dot (release branches like v5.24) cannot be switched
+            -- to at all. Telescope chains attach_mappings with the extension's first, so
+            -- replacing it here wins. Its previewer is fine: that one resolves to a
+            -- session id, which has no such ambiguity.
+            actions.select_default:replace(function()
+                local name = state.get_selected_entry().display
+                vim.cmd(string.format('silent !tmux switch-client -t %s -c %s',
+                    vim.fn.shellescape(name .. ':'), vim.fn.shellescape(current_client)))
+                actions.close(prompt_bufnr)
+            end)
+
             -- M-d: smart teardown, keep picker open, refresh when done
             map({ 'i', 'n' }, '<M-d>', function()
                 local name = state.get_selected_entry().display
@@ -98,15 +114,15 @@ M.sessions = function()
             -- M-x: vanilla kill, keep picker open.
             -- Leaves worktrees behind by design — prefer M-d / M-D for dev sessions.
             map({ 'i', 'n' }, '<M-x>', function()
-                local e = state.get_selected_entry()
+                local name = state.get_selected_entry().display
                 -- explicit 'y' only. This used to accept a bare Enter, which made an
                 -- accidental keystroke enough to destroy a session and orphan its
                 -- worktrees -- the leading candidate for the disappearances.
-                local ok = string.lower(vim.fn.input("RAW kill '" .. e.display .. "'? worktrees are NOT cleaned up. [y/N] "))
+                local ok = string.lower(vim.fn.input("RAW kill '" .. name .. "'? worktrees are NOT cleaned up. [y/N] "))
                 if ok ~= 'y' then return end
-                log_action('M-x raw-kill-session', e.display)
-                switch_away_if_current(e.display)
-                vim.fn.system('tmux kill-session -t ' .. vim.fn.shellescape(e.value .. ':'))
+                log_action('M-x raw-kill-session', name)
+                switch_away_if_current(name)
+                vim.fn.system('tmux kill-session -t ' .. vim.fn.shellescape(name .. ':'))
                 refresh(prompt_bufnr)
             end)
 
